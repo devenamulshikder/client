@@ -8,7 +8,13 @@ const PrivateRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-violet-400 dark:border-violet-600"></div>
+    <div className="lg:pt-96 lg:pl-[800px]">
+        <div className="w-10 h-10 flex gap-1 items-center justify-center">
+          <div className="w-2 h-2 animate-[bounce_.6s_linear_.2s_infinite] bg-sky-600 rounded-full"></div>
+          <div className="w-2 h-2 animate-[bounce_.6s_linear_.3s_infinite] bg-sky-600 rounded-full"></div>
+          <div className="w-2 h-2 animate-[bounce_.6s_linear_.4s_infinite] bg-sky-600 rounded-full"></div>
+        </div>
+    </div>
     );
   }
   if (user) return children;

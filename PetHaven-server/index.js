@@ -15,7 +15,7 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.shu503b.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 const client = new MongoClient(uri, {
@@ -28,6 +28,22 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
+    const petsCollection = client.db("pethavenDb").collection("pets");
+
+    // pet listing get
+    app.get("/pets", async (req, res) => {
+      const result = await petsCollection.find().toArray();
+      res.send(result);
+    });
+
+    // pet details with id
+    app.get("/pet-Details/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await petsCollection.findOne(query);
+      res.send(result);
+    });
+
     await client.connect();
     await client.db("admin").command({ ping: 1 });
     console.log(

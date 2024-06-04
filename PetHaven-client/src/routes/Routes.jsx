@@ -7,6 +7,7 @@ import Register from "../pages/Authentication/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import PetListing from "../pages/PetListing/PetListing";
 import Dashboard from "../layouts/Dashboard";
+import PetDetails from "../pages/PetDetails/PetDetails";
 
 export const router = createBrowserRouter([
   {
@@ -34,17 +35,25 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/pet-Details/:id",
+        element: (
+          <PrivateRoute>
+            <PetDetails />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/pet-Details/${params.id}`),
+      },
     ],
   },
   {
-    path:'dashboard',
-    element:<PrivateRoute>
-      <Dashboard/>
-    </PrivateRoute>,
-    children:[
-      {
-        
-      }
-    ]
-  }
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
+    children: [{}],
+  },
 ]);
